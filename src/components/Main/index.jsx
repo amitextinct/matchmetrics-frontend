@@ -29,7 +29,7 @@ function Main() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:8080/matches");
+        const response = await fetch("https://matchmetrics-backend.onrender.com/matches");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
