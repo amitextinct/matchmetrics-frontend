@@ -19,7 +19,7 @@ const Signup = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "https://matchmetrics-backend.onrender.com/api/users";
+			const url = "hhttp://localhost:8080/api/users";
 			const { data: res } = await axios.post(url, data);
 			navigate("/login");
 			console.log(res.message);

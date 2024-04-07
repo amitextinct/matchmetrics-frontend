@@ -195,7 +195,7 @@ export function Navigationbar() {
   }, []);
  
   return (
-    <Navbar className="mx-auto max-w-screen-xl px-4 py-2">
+    <Navbar className="mx-auto max-w-screen-xl px-4 py-2 rounded-none">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"

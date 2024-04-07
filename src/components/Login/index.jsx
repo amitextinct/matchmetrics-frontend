@@ -13,9 +13,11 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "https://matchmetrics-backend.onrender.com/api/auth";
+			const url = "http://localhost:8080/api/auth";
 			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.data);
+			localStorage.setItem("token", res.data.token);
+			localStorage.setItem("username", res.data.firstName + ' ' + res.data.lastName);
+			localStorage.setItem("email", res.data.email);
 			window.location = "/";
 		} catch (error) {
 			if (
