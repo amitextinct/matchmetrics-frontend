@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import AccordionCustomIcon from "./accordian";
 const Main = () => {
   return (
     <div>
@@ -6,6 +7,9 @@ const Main = () => {
       <Link to="/login">
         <button type="button">Login in</button>
       </Link>
+      <div className="mx-14 px-8 rounded shadow">
+      <AccordionCustomIcon />
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import MatchDetails from "./components/MatchDetails";
+import MatchForum from "./components/MatchForum";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 			<Route path="/login" exact element={<Login />} />
 			<Route path="/matchedetails/:id" element={<MatchDetails />} />
 			<Route path="/" element={<Navigate replace to="/Home" />} />
+			<Route path="/matchforum/:id" element={<MatchForum />} />
 		</Routes>
 	);
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function MatchDetails() {
   const { id } = useParams();
@@ -8,7 +9,7 @@ function MatchDetails() {
   useEffect(() => {
     async function fetchMatch() {
       try {
-        const response = await fetch(`http://localhost:8080/matches/${id}`);
+        const response = await fetch(`http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/matches/${id}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -46,6 +47,9 @@ function MatchDetails() {
           <p>Penalties: {score.penalties}</p>
         </div>
       ))}
+      <div>
+        <Link to={`/matchforum/${id}`}>Go to Match Forum</Link>
+      </div>
     </div>
   );
 }
