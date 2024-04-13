@@ -20,7 +20,8 @@ const profileMenuItems = [
 ];
 const handleLogout = () => {
   localStorage.removeItem("token", "username", "email");
-  window.location.reload();
+  localStorage.clear();
+  window.location.href = "/"
 };
 
 function ProfileMenu() {
