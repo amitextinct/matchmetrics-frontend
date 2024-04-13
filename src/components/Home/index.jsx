@@ -1,15 +1,11 @@
-import { Link } from "react-router-dom";
-import AccordionCustomIcon from "./accordian";
+import HeroSection16 from "./hero";
+import Footer16 from "./footer";
 const Main = () => {
   return (
     <div>
-      <div className="text-7xl text-center text-blue-400">MATCHMETRICS</div>
-      <Link to="/login">
-        <button type="button">Login in</button>
-      </Link>
-      <div className="mx-14 px-8 rounded shadow">
-      <AccordionCustomIcon />
-      </div>
+      <HeroSection16 />
+      <br /><br /><br /><br />
+      <Footer16 />
     </div>
   );
 };

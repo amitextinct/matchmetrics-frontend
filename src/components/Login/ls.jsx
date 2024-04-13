@@ -1,63 +1,65 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { Typography, Input, Button } from "@material-tailwind/react";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  Collapse,
-  IconButton,
-  Typography,
-  Button,
-  Input,
-} from "@material-tailwind/react";
+import { Navbar, Collapse, IconButton } from "@material-tailwind/react";
 import {
   RectangleStackIcon,
   UserCircleIcon,
   CommandLineIcon,
   Squares2X2Icon,
-  EyeSlashIcon,
-  EyeIcon,
 } from "@heroicons/react/24/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-const Signup = () => {
-  const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
+function NavItem({ children }) {
+  return (
+    <li>
+      <Typography
+        as="a"
+        href="#"
+        variant="paragraph"
+        color="blue-gray"
+        className="text-blue-gray-700 flex items-center gap-2 font-medium"
+      >
+        {children}
+      </Typography>
+    </li>
+  );
+}
+
+export function Basic() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
+  const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
+
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpen(false)
+    );
+  }, []);
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
-  function NavItem({ children }) {
-    return (
-      <li>
-        <Typography
-          as="a"
-          href="#"
-          variant="paragraph"
-          color="blue-gray"
-          className="text-blue-gray-700 flex items-center gap-2 font-medium"
-        >
-          {children}
-        </Typography>
-      </li>
-    );
-  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url =
-        "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/users";
+        "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/auth";
       const { data: res } = await axios.post(url, data);
-      navigate("/login");
-      console.log(res.message);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem(
+        "username",
+        res.data.firstName + " " + res.data.lastName
+      );
+      localStorage.setItem("email", res.data.email);
+      window.location = "/";
     } catch (error) {
       if (
         error.response &&
@@ -68,7 +70,6 @@ const Signup = () => {
       }
     }
   };
-
   return (
     <div>
       <Navbar shadow={false} fullWidth className="border-0">
@@ -78,10 +79,9 @@ const Signup = () => {
               MATCHMETRICS
             </Typography>
           </Link>
-
           <div className="hidden items-center gap-4 lg:flex">
-            <Link to="/Login">
-              <Button color="gray">Log in</Button>
+            <Link to="/signup">
+              <Button color="gray">Sign up</Button>
             </Link>
           </div>
           <IconButton
@@ -131,65 +131,15 @@ const Signup = () => {
       <section className="grid text-center h-[92vh] items-center p-8 mt-[-20]">
         <div>
           <Typography variant="h3" color="blue-gray" className="mb-2">
-            Sign up
+            Log In
           </Typography>
           <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-            Enter your details to Sign up
+            Enter your email and password to Log in
           </Typography>
           <form
             onSubmit={handleSubmit}
             className="mx-auto max-w-[24rem] text-left"
           >
-            <div className="mb-6">
-              <label htmlFor="text">
-                <Typography
-                  variant="small"
-                  className="mb-2 block font-medium text-gray-900"
-                >
-                  First Name
-                </Typography>
-              </label>
-              <Input
-                id="firstName"
-                color="gray"
-                size="lg"
-                type="text"
-                name="firstName"
-                placeholder="Harish"
-                value={data.firstName}
-                required
-                onChange={handleChange}
-                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
-                labelProps={{
-                  className: "hidden",
-                }}
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="text">
-                <Typography
-                  variant="small"
-                  className="mb-2 block font-medium text-gray-900"
-                >
-                  Last Name
-                </Typography>
-              </label>
-              <Input
-                id="lastName"
-                color="gray"
-                size="lg"
-                type="text"
-                name="lastName"
-                placeholder="Pal"
-                value={data.lastName}
-                required
-                onChange={handleChange}
-                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
-                labelProps={{
-                  className: "hidden",
-                }}
-              />
-            </div>
             <div className="mb-6">
               <label htmlFor="email">
                 <Typography
@@ -199,7 +149,7 @@ const Signup = () => {
                   variant="small"
                   className="mb-2 block font-medium text-gray-900"
                 >
-                  Email
+                  Your Email
                 </Typography>
               </label>
               <Input
@@ -258,13 +208,23 @@ const Signup = () => {
               fullWidth
               type="submit"
             >
-              Sign up
+              Login
             </Button>
           </form>
+          <Typography
+            variant="small"
+            color="gray"
+            className="mt-4 text-center font-normal"
+          >
+            Not registered?{" "}
+            <a href="/" className="font-medium text-gray-900">
+              <Link to="/signup">Create account</Link>
+            </a>
+          </Typography>
         </div>
       </section>
     </div>
   );
-};
+}
 
-export default Signup;
+export default Basic;

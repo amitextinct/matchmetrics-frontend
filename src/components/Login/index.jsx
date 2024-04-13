@@ -1,38 +1,40 @@
-import { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+// import { useState } from "react";
+// import axios from "axios";
+// import { Link } from "react-router-dom";
+import Basic from "./ls";
 
 const Login = () => {
-	const [data, setData] = useState({ email: "", password: "" });
-	const [error, setError] = useState("");
+	// const [data, setData] = useState({ email: "", password: "" });
+	// const [error, setError] = useState("");
 
-	const handleChange = ({ currentTarget: input }) => {
-		setData({ ...data, [input.name]: input.value });
-	};
+	// const handleChange = ({ currentTarget: input }) => {
+	// 	setData({ ...data, [input.name]: input.value });
+	// };
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			const url = "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/auth";
-			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.data.token);
-			localStorage.setItem("username", res.data.firstName + ' ' + res.data.lastName);
-			localStorage.setItem("email", res.data.email);
-			window.location = "/";
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
-				setError(error.response.data.message);
-			}
-		}
-	};
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	try {
+	// 		const url = "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/auth";
+	// 		const { data: res } = await axios.post(url, data);
+	// 		localStorage.setItem("token", res.data.token);
+	// 		localStorage.setItem("username", res.data.firstName + ' ' + res.data.lastName);
+	// 		localStorage.setItem("email", res.data.email);
+	// 		window.location = "/";
+	// 	} catch (error) {
+	// 		if (
+	// 			error.response &&
+	// 			error.response.status >= 400 &&
+	// 			error.response.status <= 500
+	// 		) {
+	// 			setError(error.response.data.message);
+	// 		}
+	// 	}
+	// };
 
 	return (
 		<div>
-			<div>
+			<Basic />
+			{/* <div>
 				<div>
 					<form onSubmit={handleSubmit}>
 						<h1>Login to Your Account</h1>
@@ -66,7 +68,7 @@ const Login = () => {
 						</button>
 					</Link>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };
