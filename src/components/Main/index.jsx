@@ -32,15 +32,18 @@ function Main() {
   return (
     <div>
       <Navigationbar />
+      <div className="text-center text-5xl font-sans mt-10">
+          <p>Match List</p>
+        </div>
       <div className="grid mt-16 min-h-[75vh] w-full lg:h-[54rem] md:h-[34rem] place-items-stretch bg-center bg-contain bg-no-repeat ">
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
           {matches.length === 0 ? (
             <p>Loading...</p>
           ) : (
             matches.map((match, index) => (
               <div
                 key={index}
-                className="flex flex-row items-center justify-center space-x-20 border border-gray-500 rounded-xl px-8 py-2"
+                className="flex flex-row items-center justify-center space-x-20 border border-gray-500 rounded-xl px-8 py-2 my-4"
               >
                 <p className="text-3xl">{match.team1}</p>
                 <p className="text-xl">vs</p>

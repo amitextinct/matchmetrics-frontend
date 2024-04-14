@@ -90,15 +90,6 @@ function ProfileMenu() {
 }
 
 export function Navigationbar() {
-  const setOpenNav = React.useState(false);
-
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  });
-
   return (
     <Navbar className="mx-auto max-w-screen-xl px-4 py-2 rounded-none">
       <div className="flex items-center justify-between text-blue-gray-900">

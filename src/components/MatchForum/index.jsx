@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navigationbar from "../NavBar";
+import Footer16 from "../Home/footer";
 
 function Comments() {
   const { id } = useParams();
   const [comments, setComments] = useState(null);
   const [newComment, setNewComment] = useState("");
+  const [match, setMatch] = useState(null);
   const username = localStorage.getItem("username");
   useEffect(() => {
     async function fetchComments() {
@@ -18,11 +20,25 @@ function Comments() {
         }
         const data = await response.json();
         setComments(data);
-        window.scrollTo(0, document.body.scrollHeight);
       } catch (error) {
         console.error("There was an error!", error);
       }
     }
+    async function fetchMatch() {
+      try {
+        const response = await fetch(
+          `http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/matches/${id}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setMatch(data);
+      } catch (error) {
+        // handle error
+      }
+    }
+    fetchMatch();
     fetchComments();
   }, [id]);
 
@@ -76,55 +92,81 @@ function Comments() {
       <div className="fixed top-0 left-0 right-0 z-50">
         <Navigationbar />
       </div>
-      <div className="p-11 flex justify-center">
-        <div className="bg-gray-900 rounded-2xl mb-11 pt-11">
-          <div className="mt-16 mx-1/5 border border-gray-900 mb-16 w-4/5 bg-white m-4 p-7 overflow-auto whitespace-normal ">
-            {comments.map((comment, index) => (
-              <div key={index}>
-                <div className="mx-11 border border-gray-900 rounded-3xl">
-                  <div className="text-l italic">{"→"}{comment.username}</div>
-                  <div className="overflow-auto whitespace-normal text-xl mb-2 mt-2 ml-10 mr-10 border border-t-gray-900 rounded-xl ">
-                    {comment.text}
-                  </div>
-                  <div className="text-sm">
-                    {new Date(comment.date).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}
-                  </div>
-                </div>
-              </div>
-            ))}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+      <br /><br /><br /><br /><br /><br />
+      <section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
+        <div class="max-w-2xl mx-auto px-4">
+          <div class="flex justify-between items-center mb-6">
+          <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white justify-center">
+          {match?.team1} vs {match?.team2}
+            </h2>
+            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+              Discussion Board
+            </h2>
           </div>
-        </div>
-        <div className="fixed bottom-0 left-0 right-0 flex  justify-center text-2xl pb-11 bg-white mx-auto max-w-screen-xl px-4 py-2 border border-t-gray-900">
-          <form onSubmit={handleCommentSubmit}>
-            <input
-              type="text"
-              value={newComment}
-              onChange={handleCommentChange}
-              placeholder="Add a comment"
-              required
-              className=" border border-gray-500 rounded-2xl text-center placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-400"
-            />
-            <div className="flex flex-row justify-center pt-3">
-              <button
-                type="submit"
-                color="gray"
-                size="lg"
-                className="flex flex-row items-center justify-center space-x-20 border border-gray-500 rounded-2xl px-8 py-2  text-white bg-gray-900 hover:text-gray-900 hover:bg-black"
-                fullWidth
-                onClick={() => window.scrollTo(0, document.body.scrollHeight)}
-              >
-                Post
-              </button>
+          <form class="mb-6" onSubmit={handleCommentSubmit}>
+            <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <label for="comment" class="sr-only">
+                Your comment
+              </label>
+              <textarea
+                id="comment"
+                rows="6"
+                class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                placeholder="Write a comment..."
+                value={newComment}
+                onChange={handleCommentChange}
+                required
+              ></textarea>
             </div>
+            <button
+              type="submit"
+              class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center border border-gray-500 rounded-2xl  text-white bg-gray-900 hover:text-gray-900 hover:bg-black"
+            >
+              Post comment
+            </button>
           </form>
+          {[...comments].reverse().map((comment, index) => (
+              <div key={index}>
+          <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+            <footer class="flex justify-between items-center mb-2">
+              <div class="flex items-center">
+                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                  <img
+                    class="mr-2 w-6 h-6 rounded-full"
+                    src="https://source.unsplash.com/random/300x300?{index}"
+                    alt=""
+                  />
+                  {"→"}
+                    {comment.username}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 ml-4">
+                {new Date(comment.date).toLocaleString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    })}
+                </p>
+              </div>
+            </footer>
+            <p class="text-gray-500 dark:text-gray-400 ml-5">
+            {comment.text}
+            </p>
+          </article>
+          </div>
+        ))}
+        
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
-      </div>
+      </section>
+      <Footer16 />
     </div>
   );
 }
