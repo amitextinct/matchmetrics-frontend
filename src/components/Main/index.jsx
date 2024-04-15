@@ -57,8 +57,9 @@ function Main() {
             ))
           )}
         </div>
+        <Footer16 />
       </div>
-      <Footer16 />
+      
     </div>
   );
 }
