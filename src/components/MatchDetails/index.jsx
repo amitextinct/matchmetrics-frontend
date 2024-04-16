@@ -66,7 +66,7 @@ function MatchDetails() {
                       Goal Timings:{" "}
                       {score.goals?.map((goal, index) => (
                         <div key={index}>
-                          <p>Timing: {goal.timing}</p>
+                          <p>{goal.timing} min</p>
                         </div>
                       ))}
                     </div>
