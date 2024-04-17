@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import MatchDetails from "./components/MatchDetails";
 import MatchForum from "./components/MatchForum";
-
+import AccountCenter from "./components/AccountCenter";
 
 function App() {
 	const user = localStorage.getItem("token");
@@ -14,6 +14,7 @@ function App() {
 		<Routes>
 			{user && <Route path="/" exact element={<Main />} />}
 			<Route path="/home" exact element={<Home />} />
+			<Route path="/accountcenter" exact element={<AccountCenter />} />
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
 			<Route path="/matchedetails/:id" element={<MatchDetails />} />

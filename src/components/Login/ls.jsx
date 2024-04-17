@@ -5,28 +5,9 @@ import { Typography, Input, Button } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { Navbar, Collapse, IconButton } from "@material-tailwind/react";
-import {
-  RectangleStackIcon,
-  UserCircleIcon,
-  CommandLineIcon,
-  Squares2X2Icon,
-} from "@heroicons/react/24/solid";
+
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-function NavItem({ children }) {
-  return (
-    <li>
-      <Typography
-        as="a"
-        href="#"
-        variant="paragraph"
-        color="blue-gray"
-        className="text-blue-gray-700 flex items-center gap-2 font-medium"
-      >
-        {children}
-      </Typography>
-    </li>
-  );
-}
+
 
 export function Basic() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -59,6 +40,7 @@ export function Basic() {
         res.data.firstName + " " + res.data.lastName
       );
       localStorage.setItem("email", res.data.email);
+      localStorage.setItem("imageUrl", res.data.imageUrl);
       window.location = "/";
     } catch (error) {
       if (
@@ -100,22 +82,6 @@ export function Basic() {
         <Collapse open={open}>
           <div className="container mx-auto mt-3 border-t border-blue-gray-50 px-2 pt-4">
             <ul className="flex flex-col gap-4">
-              <NavItem>
-                <RectangleStackIcon className="h-5 w-5" />
-                Pages
-              </NavItem>
-              <NavItem>
-                <UserCircleIcon className="h-5 w-5" />
-                Account
-              </NavItem>
-              <NavItem>
-                <Squares2X2Icon className="h-5 w-5" />
-                Blocks
-              </NavItem>
-              <NavItem>
-                <CommandLineIcon className="h-5 w-5" />
-                Docs
-              </NavItem>
             </ul>
             <div className="mt-6 mb-4 flex items-center gap-4">
               <Link to="/login">

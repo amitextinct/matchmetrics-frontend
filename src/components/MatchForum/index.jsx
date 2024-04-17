@@ -5,6 +5,7 @@ import Footer16 from "../Home/footer";
 
 function Comments() {
   const { id } = useParams();
+  const imageUrl = localStorage.getItem("imageUrl");
   const [comments, setComments] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [match, setMatch] = useState(null);
@@ -69,7 +70,7 @@ function Comments() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ text: newComment, username: username }), // Include the username in the body of the request
+          body: JSON.stringify({ text: newComment, username: username ,userImage : imageUrl}), // Include the username in the body of the request
         }
       );
       if (!response.ok) {
@@ -102,6 +103,7 @@ function Comments() {
             <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
               Discussion Board
             </h2>
+            {/* <img src={imageUrl} alt="" /> */}
           </div>
           <form class="mb-6" onSubmit={handleCommentSubmit}>
             <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -133,7 +135,7 @@ function Comments() {
                 <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                   <img
                     class="mr-2 w-6 h-6 rounded-full"
-                    src="https://source.unsplash.com/random/300x300?{index}"
+                    src={comment.userImage}
                     alt=""
                   />
                   {"→"}

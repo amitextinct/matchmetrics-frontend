@@ -25,6 +25,7 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
+    imageUrl: "",
   });
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
@@ -52,9 +53,16 @@ const Signup = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const randomNumber = Math.floor(Math.random() * 51) + 50;
+
+    // Append the random number to the URL string
+    const imageUrl = `https://randomuser.me/api/portraits/men/${randomNumber}.jpg`;
+    setData((prevState) => ({
+      ...prevState,
+      imageUrl,
+    }));
     try {
-      const url =
-        "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/users";
+      const url = "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/users";
       const { data: res } = await axios.post(url, data);
       navigate("/login");
       console.log(res.message);
