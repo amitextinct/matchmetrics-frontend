@@ -61,22 +61,29 @@ const Signup = () => {
       ...prevState,
       imageUrl,
     }));
-    try {
-      const url = "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/users";
-      const { data: res } = await axios.post(url, data);
-      navigate("/login");
-      console.log(res.message);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
-    }
   };
-
+  React.useEffect(() => {
+    const postData = async () => {
+      try {
+        const url = "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/users";
+        const { data: res } = await axios.post(url, data);
+        navigate("/login");
+        console.log(res.message);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status <= 500
+        ) {
+          setError(error.response.data.message);
+        }
+      }
+    };
+  
+    if (data.imageUrl) {
+      postData();
+    }
+  }, [data,navigate]);
   return (
     <div>
       <Navbar shadow={false} fullWidth className="border-0">
