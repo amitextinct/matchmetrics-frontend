@@ -4,7 +4,7 @@ const Main = () => {
   const isMobile = window.innerWidth <= 768;
   return (
     <div>
-      {isMobile && <div className="w-full">Please use a desktop to view this page.</div>}
+      {isMobile && <div className="w-full bg-black text-white">Please use a desktop to view this page.</div>}
       <HeroSection16 />
       <br />
       <br />
