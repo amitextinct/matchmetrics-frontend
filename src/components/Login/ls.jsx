@@ -32,7 +32,7 @@ export function Basic() {
     e.preventDefault();
     try {
       const url =
-        "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/auth";
+        "https://matchmetrics-backend.onrender.com/api/auth";
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem(

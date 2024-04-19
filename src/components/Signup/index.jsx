@@ -65,7 +65,7 @@ const Signup = () => {
   React.useEffect(() => {
     const postData = async () => {
       try {
-        const url = "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/api/users";
+        const url = "https://matchmetrics-backend.onrender.com/api/users";
         const { data: res } = await axios.post(url, data);
         navigate("/login");
         console.log(res.message);

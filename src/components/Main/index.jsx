@@ -9,7 +9,7 @@ function Main() {
     async function fetchData() {
       try {
         const response = await fetch(
-          "http://matchmetrics-env.eba-k8icnpjn.ap-south-1.elasticbeanstalk.com/matches"
+          "https://matchmetrics-backend.onrender.com/matches"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
